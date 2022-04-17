@@ -38,13 +38,14 @@ def theo_cross_section_wrapper(Zp, Zt, alpha, E, X):
 
 def Z_t_theoretical(X):
         rho_ch = rho_ch_wrapper(X)
-        return 4*const.pi/const.e * integrate.quad(lambda r: r**2 * rho_ch(r), 0, np.inf) 
+        y, _ = integrate.quad(lambda r: r**2 * rho_ch(r), 0, np.inf)
+        return 4*const.pi/const.e * y
 
 def cost_function_wrapper(Zp, Zt, epsilon, alpha, E, data):
     def lsq_function(X):
         Z_t_eval = Z_t_theoretical(X)
         theta, exp_cross, exp_error = data
-        Z_term = (Z_t - Z_t_eval)**2 / epsilon
+        Z_term = (Zt - Z_t_eval)**2 / epsilon
         F = theo_cross_section_wrapper(Zp, Zt, alpha, E, X)(theta)
         return np.sum((F - exp_cross)**2 / exp_error**2) + Z_term
     return lsq_function
