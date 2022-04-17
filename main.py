@@ -76,3 +76,4 @@ data_ax.set_title("Experimental data")
 plt.get_current_fig_manager().window.showMaximized()
 
 plt.show()
+
