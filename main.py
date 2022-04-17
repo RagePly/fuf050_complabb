@@ -27,8 +27,10 @@ def form_factor_wrapper(Z,E,X):
     A = 4 * const.pi * const.hbar / Z / const.e # TODO: dont forget q!!!!
     def form_factor_inner(theta):
         q = 2 * p * np.sin(theta)
-        f = lambda r: r * rho_ch(r) * np.sin(q * r/ const.hbar)
-        return integrate.quad(f, 0, np.inf)
+        def f(single_theta):
+            return r * rho_ch(r) * np.sin(q * r/ const.hbar)
+        int_res = np.array[integrate.quad(f, 0, np.inf)
+        return int_res 
     return form_factor_inner
 
 def theo_cross_section_wrapper(Zp, Zt, alpha, E, X):
